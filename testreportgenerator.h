@@ -2,6 +2,7 @@
 #define TESTREPORTGENERATOR_H
 
 #include <QMainWindow>
+#include <QProcess>
 
 namespace Ui {
 class TestReportGenerator;
@@ -38,6 +39,10 @@ private slots:
     void on_checkBox8_stateChanged(int arg1);
 
     void on_Generate_clicked();
+
+public slots:
+
+    void on_generation_finished(int i, QProcess::ExitStatus e);
 
 private:
     Ui::TestReportGenerator *ui;

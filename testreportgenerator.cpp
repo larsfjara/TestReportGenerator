@@ -3,6 +3,7 @@
 #include <QFileDialog>
 #include <QDebug>
 #include <QProcess>
+#include <QObject>
 TestReportGenerator::TestReportGenerator(QWidget *parent) :
     QMainWindow(parent),
     ui(new Ui::TestReportGenerator)
@@ -116,8 +117,13 @@ void TestReportGenerator::on_Generate_clicked()
     appr.append("\"");
     QStringList arguments { "/home/larskf/TestReportGenerator/pdftest.py", nms, ch, inputFile, outputFile, appr};
     QProcess p;
+    QObject::connect(&p, SIGNAL(finished(int, QProcess::ExitStatus)), this, SLOT(on_generation_finished(int, QProcess::ExitStatus)));
     p.start("python3", arguments);
     p.waitForFinished();
 
 
+}
+
+void TestReportGenerator::on_generation_finished(int, QProcess::ExitStatus){
+    qDebug() << "Generation finished";
 }
